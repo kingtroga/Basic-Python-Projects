@@ -20,14 +20,14 @@ class TooManyDigitsError(Error):
 
 # the errors are not automatic because they are not in bulit
 
-def arithmetic_arranger(problems, answer=False):
-	#Input Error handling
+def error_check(problems):
+	"""Function for that performs the error check"""
 	try:
 		if len(problems) > 5:
 			raise TooManyProblemsError
 		for problem in problems:
 			words = problem.split()
-			print(words)
+			#print(words)
 			if not ((words[1] == '+') or (words[1] == '-')):
 				#print(words[1])
 				#print(word)
@@ -46,8 +46,6 @@ def arithmetic_arranger(problems, answer=False):
 		print("Error: Numbers must only contain digits.")
 	except TooManyDigitsError:
 		print("Error: Numbers cannot be more than four digits.")
-	else:
-		pass
 
 def linear_search(string): 
 	for char in string:
@@ -56,6 +54,14 @@ def linear_search(string):
 		else:
 			return False
 	return True
+
+def arithmetic_arranger(problems, answer=False):
+	error_check(problems)
+	for problem in problems:
+		word = problem.split()
+		print(word)
+
+
 
 
 arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
