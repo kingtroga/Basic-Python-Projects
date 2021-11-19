@@ -50,6 +50,7 @@ def error_check(problems):
 def linear_search(string): 
 	for char in string:
 		if char.isdigit():
+			
 			continue
 		else:
 			return False
@@ -58,9 +59,30 @@ def linear_search(string):
 def arithmetic_arranger(problems, answer=False):
 	error_check(problems)
 	for problem in problems:
-		word = problem.split()
-		print(word)
+		words = problem.split()
+		#print("\n",words, sep="")
+		firstOperand = words[0]
+		secondOperand = words[2]
+		operatorused= words[1]
+		largerOperand = get_operand_size(words, True)
+		smallerOperand = get_operand_size(words)
+		txt= """{:>1}{:<1}{:>1}"""
+		print(txt.format(firstOperand,operatorused,secondOperand), sep="    ",end="")
+		#print("large:",largerOperand," small: ",smallerOperand)
 
+def get_operand_size(string, large=False):
+	"""Gets the larger operand or the smaller operand"""
+	#This logic works even if the numbers are the same
+	if large:
+		if int(string[0]) > int(string[2]):
+			return string[0]
+		else:
+			return string[2]
+	else:
+		if int(string[0]) < int(string[2]):
+			return string[0]
+		else:
+			return string[2]
 
 
 
