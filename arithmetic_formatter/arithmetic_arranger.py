@@ -21,6 +21,7 @@ def arithmetic_arranger(problems, statprint=False):
         if not firsts.isnumeric() or not seconds.isnumeric():
             return "Error: Numbers must only contain digits."
 
+
         if (operands == '+' or operands == '-'):
             if operands == "+":
                 sums = str(int(firsts) + int(seconds))
