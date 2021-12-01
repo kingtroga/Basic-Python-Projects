@@ -1,70 +1,59 @@
-#defined all the errors
-class Error(Exception):
-	"""Base class for all other exceptions"""
-	pass
-class TooManyProblemsError(Error):
-	"""Raised when the problems are more than 5"""
-	pass
-class InvalidOperatorError(Error):
-	"""Raised when the inputed operator isn't '+' or '-'"""
-	pass
-class InvalidOperandError(Error):
-	"""
-	Raised when an operand contains a value that isn't a digit
-	"""
-	pass
-class TooManyDigitsError(Error):
-	"""Raised when either operand has more than 4 digits"""
-	pass
+def arithmetic_arranger(problems, statprint=False):
+    # check problem list
+    first = ''
+    second = ''
+    sumx = ''
+    lines = ''
+    # maximal problems is 5
+    if len(problems) >= 6:
+        return 'Error: Too many problems.'
+    # split problem to separate components
+    for i in problems:
+        a = i.split()
+        firsts = a[0]
+        seconds = a[2]
+        operands = a[1]
+        # check the length of the number, max 4 digits
+        if (len(firsts) > 4 or len(seconds) > 4):
+            return "Error: Numbers cannot be more than four digits."
 
+        # check the input as valid digits
+        if not firsts.isnumeric() or not seconds.isnumeric():
+            return "Error: Numbers must only contain digits."
 
-# the errors are not automatic because they are not in bulit
-
-def error_check(problems):
-	"""Function for that performs the error check"""
-	try:
-		if len(problems) > 5:
-			raise TooManyProblemsError
-		for problem in problems:
-			words = problem.split()
-			#print(words)
-			if not ((words[1] == '+') or (words[1] == '-')):
-				#print(words[1])
-				#print(word)
-				raise InvalidOperatorError
-			if not (linear_search(words[0]) and linear_search(words[2])):
-				raise InvalidOperandError
-			if (len(words[0]) > 4 and len(words[2]) > 4):
-				print(len(words[0]))
-				print(len(words[2]))
-				raise TooManyDigitsError
-	except TooManyProblemsError:
-		print("Error: Too many problems.")
-	except InvalidOperatorError:
-		print("Error: Operator must be '+' or '-'.")
-	except InvalidOperandError:
-		print("Error: Numbers must only contain digits.")
-	except TooManyDigitsError:
-		print("Error: Numbers cannot be more than four digits.")
-
-def linear_search(string): 
-	for char in string:
-		if char.isdigit():
-			continue
-		else:
-			return False
-	return True
-
-def arithmetic_arranger(problems, answer=False):
-	error_check(problems)
-	for problem in problems:
-		word = problem.split()
-		print(word)
-
-
-
-
-arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
-
-arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True)
-
+        if (operands == '+' or operands == '-'):
+            if operands == "+":
+                sums = str(int(firsts) + int(seconds))
+            else:
+                sums = str(int(firsts) - int(seconds))
+            # set length of sum and top, bottom and line values
+            length = max(len(firsts), len(seconds)) + 2
+            top = str(firsts).rjust(length)
+            bottom = operands + str(seconds).rjust(length - 1)
+            line = ''
+            res = str(sums).rjust(length)
+            for s in range(length):
+                line += '-'
+            # add to the overall string
+            if i != problems[-1]:
+              first += top + '    '
+              second += bottom + '    '
+              lines += line + '    '
+              sumx += res + '    '
+            else:
+              first += top
+              second += bottom
+              lines += line
+              sumx += res
+        else:
+            return "Error: Operator must be '+' or '-'."
+    # strip out spaces to the right of the string
+    first.rstrip()
+    second.rstrip()
+    lines.rstrip()
+    if statprint:
+        sumx.rstrip()
+        arranged_problems = first + '\n' + second + '\n' + lines + '\n' + sumx
+    else:
+        arranged_problems = first + '\n' + second + '\n' + lines
+    return arranged_problems
